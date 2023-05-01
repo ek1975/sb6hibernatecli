@@ -4,6 +4,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import test.aj.sb6.hibernatecrud.dao.StudentDAO;
+import test.aj.sb6.hibernatecrud.entity.Student;
 /*
 Hibernate CLI CRUD Project Sequence: Part A:
 1) Open MySQL workbench, connect to Local instance u/ root/root.  Open & execute 01-create-user.sql to create
@@ -32,9 +34,23 @@ public class HibernatecrudApplication {
 
 	//CommandLineRunner is from SB framework, executes after beans are loaded
 	@Bean
-	public CommandLineRunner commandLineRunner(String[] args) {
+	public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
 		return runner -> {
-			System.out.println("Hi Andrew! Let's try to run Hibernate through CLI!");
+//			createStudent(studentDAO);
+			findByStudentId(studentDAO, 2);
 		};
+	}
+
+	private void findByStudentId(StudentDAO studentDAO, int studentId) {
+		System.out.println("Getting student whose id is " + studentId);
+		Student student = studentDAO.getStudentbyId(studentId);
+		System.out.println("Student info: " + student);
+	}
+
+	private void createStudent(StudentDAO studentDAO) {
+		System.out.println("Saving student...");
+		Student student = new Student("B", "B", "b@b.b");
+		studentDAO.save(student);
+		System.out.println("ID of student just created is: " + student.getId());
 	}
 }
