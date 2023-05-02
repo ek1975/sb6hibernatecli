@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import test.aj.sb6.hibernatecrud.dao.StudentDAO;
 import test.aj.sb6.hibernatecrud.entity.Student;
+
+import java.util.List;
 /*
 Hibernate CLI CRUD Project Sequence: Part A:
 1) Open MySQL workbench, connect to Local instance u/ root/root.  Open & execute 01-create-user.sql to create
@@ -37,8 +39,16 @@ public class HibernatecrudApplication {
 	public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
 		return runner -> {
 //			createStudent(studentDAO);
-			findByStudentId(studentDAO, 2);
+//			findByStudentId(studentDAO, 2);
+			findAllMatchingStudents(studentDAO);
 		};
+	}
+
+	private void findAllMatchingStudents(StudentDAO studentDAO) {
+		List<Student> l1 = studentDAO.getMatchingStudents();
+		for (Student s1: l1) {
+			System.out.println(s1);
+		}
 	}
 
 	private void findByStudentId(StudentDAO studentDAO, int studentId) {
