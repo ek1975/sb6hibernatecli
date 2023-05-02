@@ -11,4 +11,10 @@ public interface StudentDAO {
     Student getStudentbyId(int studentId);
 
     List<Student> getMatchingStudents();
+
+    void updateStudent(Student student);
+
+    void deleteStudentById(int studentId);
+
+    int deleteAllStudents();
 }

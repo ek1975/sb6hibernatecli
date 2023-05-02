@@ -38,10 +38,27 @@ public class HibernatecrudApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
 		return runner -> {
-//			createStudent(studentDAO);
+			createStudent(studentDAO);
 //			findByStudentId(studentDAO, 2);
-			findAllMatchingStudents(studentDAO);
+//			findAllMatchingStudents(studentDAO);
+//			updateStudent(studentDAO);
+//			deleteStudent(studentDAO);
+//			deleteAllStudents(studentDAO);
 		};
+	}
+
+	private void deleteAllStudents(StudentDAO studentDAO) {
+		System.out.println("Total students deleted: " + studentDAO.deleteAllStudents());
+	}
+
+	private void deleteStudent(StudentDAO studentDAO) {
+		studentDAO.deleteStudentById(2);
+	}
+
+	private void updateStudent(StudentDAO studentDAO) {
+		Student student = studentDAO.getStudentbyId(1);
+		student.setFirstName("C");
+		studentDAO.updateStudent(student);
 	}
 
 	private void findAllMatchingStudents(StudentDAO studentDAO) {
@@ -58,8 +75,11 @@ public class HibernatecrudApplication {
 	}
 
 	private void createStudent(StudentDAO studentDAO) {
-		System.out.println("Saving student...");
-		Student student = new Student("B", "B", "b@b.b");
+		System.out.println("Creating student...");
+		Student student = new Student("A", "A", "a@a.a");
+		studentDAO.save(student);
+		System.out.println("ID of student just created is: " + student.getId());
+		student = new Student("B", "B", "b@b.b");
 		studentDAO.save(student);
 		System.out.println("ID of student just created is: " + student.getId());
 	}
